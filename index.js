@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import signupRouter from './routes/signup.js';
+import loginRouter from './routes/login.js';
 import cors from 'cors';
 
 dotenv.config();
@@ -14,14 +15,18 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB', err));
 
-app.use('/api', signupRouter);
-app.get('/', (_, res) => {
+
+  app.get('/', (_, res) => {
     res.json({
         status: 'Backend is running!',
         timestamp: new Date().toISOString(),
         database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
     });
 });
+  
+app.use('/api', signupRouter);
+app.use('/api', loginRouter);
+
 
 
 const PORT = process.env.PORT || 5000;
