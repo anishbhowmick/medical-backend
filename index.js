@@ -8,15 +8,7 @@ import cors from 'cors';
 dotenv.config();
 
 const app = express();
-
-// Configure CORS to allow requests from your frontend application
-// const corsOptions = {
-//   origin: ['https://medical-webpage-front.vercel.app/','https://medical-webpage-signin.vercel.app/', 'https://docotr-dashboard.vercel.app', 'https://patient-dashboard-pink.vercel.app'],
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   credentials: true, // if you need to include cookies in the requests
-// };
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
