@@ -8,24 +8,7 @@ import cors from 'cors';
 dotenv.config();
 
 const app = express();
-const allowedOrigins = [
-  'https://medical-webpage-front.vercel.app/',
-  'https://medical-webpage-signup-aafo.vercel.app/',
-  'https://medical-webpage-signin.vercel.app/',
-  'https://patient-dashboard-pink.vercel.app/',
-  'https://docotr-dashboard.vercel.app/'
-];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-}));
+app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
