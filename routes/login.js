@@ -26,7 +26,15 @@ router.post('/login', async (req, res) => {
       return res.status(400).send({ error: 'Invalid credentials' });
     }
 
-    res.status(200).send({ message: 'Login successful', role: user.role });
+    const userData = {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+    };
+
+    res.status(200).send({ message: 'Login successful', role: user.role, user: userData });
   } catch (error) {
     res.status(500).send({ error: 'Server error' });
   }
