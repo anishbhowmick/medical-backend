@@ -27,9 +27,9 @@ router.post('/login', async (req, res) => {
     }
 
     if (user.role === 'doctor') {
-      return res.redirect('https://docotr-dashboard.vercel.app');
+      return res.redirect('https://docotr-dashboard.vercel.app/');
     } else if (user.role === 'patient') {
-      return res.redirect('https://patient-dashboard-pink.vercel.app');
+      return res.redirect('https://patient-dashboard-pink.vercel.app/');
     }
   } catch (error) {
     res.status(500).send({ error: 'Server error' });
