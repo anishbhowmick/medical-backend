@@ -26,11 +26,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).send({ error: 'Invalid credentials' });
     }
 
-    if (user.role === 'doctor') {
-      return res.redirect('https://docotr-dashboard.vercel.app/');
-    } else if (user.role === 'patient') {
-      return res.redirect('https://patient-dashboard-pink.vercel.app/');
-    }
+    res.status(200).send({ message: 'Login successful', role: user.role });
   } catch (error) {
     res.status(500).send({ error: 'Server error' });
   }
