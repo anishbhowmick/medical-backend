@@ -5,27 +5,27 @@ import bcrypt from 'bcryptjs';
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   try {
-    // Check if user is a doctor
-    let user = await Doctor.findOne({ email });
-    if (!user) {
-      // Check if user is a patient
+    let user;
+    if (role === 'doctor') {
+      user = await Doctor.findOne({ email });
+    } else if (role === 'patient') {
       user = await Patient.findOne({ email });
+    } else {
+      return res.status(400).send({ error: 'Invalid role' });
     }
 
     if (!user) {
       return res.status(404).send({ error: 'User not found' });
     }
 
-    // Validate password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).send({ error: 'Invalid credentials' });
     }
 
-    // Redirect based on role
     if (user.role === 'doctor') {
       return res.redirect('https://docotr-dashboard.vercel.app');
     } else if (user.role === 'patient') {
