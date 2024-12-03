@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// Replace 'your_jwt_secret_key' with a secure key in a real application
 const JWT_SECRET = process.env.JWT_SECRET;
+console.log('JWT_SECRET:', JWT_SECRET);
 
 router.post('/login', async (req, res) => {
   const { email, password, role } = req.body;
@@ -50,6 +50,7 @@ router.post('/login', async (req, res) => {
 
     res.status(200).send({ message: 'Login successful', token, user: userData });
   } catch (error) {
+    console.error('Login Error:', error);
     res.status(500).send({ error: 'Server error' });
   }
 });
