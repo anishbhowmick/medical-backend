@@ -5,8 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-const JWT_SECRET = '9da0d0375b9058133a9044663dffe753772dfe86c6f48f3caac81dcd37df4c222b1f92852a2f037c7c9b5316c994f29ee26bf599b216209ead76fd9c5a12dad6';
-console.log('JWT_SECRET:', JWT_SECRET);
+const JWT_SECRET = 'your_jwt_secret_key_here';
 
 router.post('/login', async (req, res) => {
   const { email, password, role } = req.body;
@@ -42,18 +41,14 @@ router.post('/login', async (req, res) => {
 
     const userData = {
       id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      name: `${user.firstName} ${user.lastName}`,
       email: user.email,
       role: user.role,
+      // imageUrl: user.imageUrl,
+      // specialty: user.specialty,
     };
 
     res.status(200).send({ message: 'Login successful', token, user: userData });
-    if (user.role === 'doctor') {
-      return res.redirect('https://docotr-dashboard.vercel.app/');
-    } else if (user.role === 'patient') {
-      return res.redirect('https://patient-dashboard-pink.vercel.app/');
-    }
   } catch (error) {
     console.error('Login Error:', error);
     res.status(500).send({ error: 'Server error' });
