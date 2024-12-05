@@ -39,16 +39,21 @@ router.post('/login', async (req, res) => {
     // Generate JWT token
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: true, // Set to true if using HTTPS
+      sameSite: 'strict',
+      maxAge: 3600000, // 1 hour
+    });
+
     const userData = {
       id: user._id,
       name: `${user.firstName} ${user.lastName}`,
       email: user.email,
       role: user.role,
-      // imageUrl: user.imageUrl,
-      // specialty: user.specialty,
     };
 
-    res.status(200).send({ message: 'Login successful', token, user: userData });
+    res.status(200).send({ message: 'Login successful', user: userData });
   } catch (error) {
     console.error('Login Error:', error);
     res.status(500).send({ error: 'Server error' });

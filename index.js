@@ -4,12 +4,14 @@ import dotenv from 'dotenv';
 import signupRouter from './routes/signup.js';
 import loginRouter from './routes/login.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET;
 console.log('JWT_SECRET:', JWT_SECRET);
