@@ -9,9 +9,18 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+  origin: [
+    'https://medical-webpage-login.vercel.app',
+    'https://doctor-dashboard-orpin.vercel.app',
+    'https://patient-dashboard-pink.vercel.app',
+    // Add other frontend domains as needed
+  ],
+  credentials: true, // Allow credentials (cookies) to be sent
+}));
 
 const JWT_SECRET = process.env.JWT_SECRET;
 console.log('JWT_SECRET:', JWT_SECRET);
