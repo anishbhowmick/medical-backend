@@ -17,7 +17,9 @@ app.use(cookieParser());
 
 // Configure CORS to allow credentials and specify the frontend origin
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend's URL
+  origin: 'https://login-doctor-patient.vercel.app/',
+  origin: 'https://medical-webpage-front.vercel.app/',
+  origin: 'https://medical-webpage-signup-aafo.vercel.app/',
   credentials: true,
 }));
 
