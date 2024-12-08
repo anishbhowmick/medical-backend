@@ -55,6 +55,15 @@ app.use('/api', loginRouter);
 app.use('/api/patients', patientsRoutes);
 // Add other routes as needed
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  if (err instanceof Error) {
+    return res.status(400).json({ error: err.message });
+  }
+  next();
+});
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
