@@ -5,19 +5,37 @@ import bcrypt from 'bcryptjs';
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {
-  const { firstName, lastName, email, password, role } = req.body;
+  const { firstName, lastName, email, password, role, specialty, qualifications, experience, avatar } = req.body;
 
   try {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     if (role === 'doctor') {
-      const doctor = new Doctor({ firstName, lastName, email, password: hashedPassword, role });
+      const doctor = new Doctor({ 
+        firstName, 
+        lastName, 
+        email, 
+        password: hashedPassword, 
+        role, 
+        specialty, 
+        qualifications, 
+        experience, 
+        avatar 
+      });
       await doctor.save();
     } else if (role === 'patient') {
-      const patient = new Patient({ firstName, lastName, email, password: hashedPassword, role });
+      const patient = new Patient({ 
+        firstName, 
+        lastName, 
+        email, 
+        password: hashedPassword, 
+        role 
+        // Add patient-specific fields if any
+      });
       await patient.save();
     }
+
     res.status(201).send({ message: 'User registered successfully' });
   } catch (error) {
     res.status(400).send({ error: error.message });

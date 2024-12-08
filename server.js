@@ -5,21 +5,20 @@ import signupRouter from './routes/signup.js';
 import loginRouter from './routes/login.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import patientsRoutes from './routes/patients.js';
+// Import other routes as needed
 
 dotenv.config();
 
 const app = express();
-// app.use(cors());
+
 app.use(express.json());
 app.use(cookieParser());
+
+// Configure CORS to allow credentials and specify the frontend origin
 app.use(cors({
-  origin: [
-    'https://medical-webpage-login.vercel.app',
-    'https://doctor-dashboard-orpin.vercel.app',
-    'https://patient-dashboard-pink.vercel.app',
-    // Add other frontend domains as needed
-  ],
-  credentials: true, // Allow credentials (cookies) to be sent
+  origin: 'http://localhost:5173', // Replace with your frontend's URL
+  credentials: true,
 }));
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -39,6 +38,8 @@ app.get('/', (_, res) => {
 
 app.use('/api', signupRouter);
 app.use('/api', loginRouter);
+app.use('/api/patients', patientsRoutes);
+// Add other routes as needed
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
