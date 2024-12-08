@@ -16,12 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Configure CORS to allow credentials and specify the frontend origin
-app.use(cors({
-  origin: 'https://login-doctor-patient.vercel.app/',
-  origin: 'https://medical-webpage-front.vercel.app/',
-  origin: 'https://medical-webpage-signup-aafo.vercel.app/',
-  credentials: true,
-}));
+app.use(cors());
 
 const JWT_SECRET = process.env.JWT_SECRET;
 console.log('JWT_SECRET:', JWT_SECRET);
